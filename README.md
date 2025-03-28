@@ -19,11 +19,12 @@
 
 📕Libraries to install
 
-pip install audioop-lts
-pip install ffmpeg
-pip install pydub
-pip install pytube
-pip install yt-dlp
+pip install audioop-lts  
+pip install ffmpeg  
+pip install pydub  
+pip install pytube  
+pip install yt-dlp  
+
 
 ⚙ SETTINGS THAT YOU CAN ADJUST ⚙
 
@@ -35,16 +36,18 @@ output_folder="" - Output folder that you want to locate downloaded mp3's
 
 'outtmpl': os.path.join(output_folder, '%(title)s_%(id)s.%(ext)s') - Modify 'outtmpl' to change how the output filename looks.
 
+
+
 📥Setup, Installation
 
-Running and download the script, open a terminal (or Command Prompt) and run:
-https://github.com/Onxx-datas/YouTubeAudioReceiver.git 
+### Running and download the script, open a terminal (or Command Prompt) and run:
+### https://github.com/Onxx-datas/YouTubeAudioReceiver.git 
 
-To navigate to the folder:
-cd Informations-about-Hospitals-in-Norwich-UK Ensure you have Python installed (>=3.7). Then, install required libraries:
-python info_scraper.py
+### To navigate to the folder:
+### cd Informations-about-Hospitals-in-Norwich-UK Ensure you have Python installed (>=3.7). Then, install required libraries:
+### python info_scraper.py
 
-After completion, your data will be saved in an mp3 file by default: "C:\\Users\\user\\Desktop\\Musics"
+### After completion, your data will be saved in an mp3 file by default: "C:\\Users\\user\\Desktop\\Musics"
 
 📜File Structure  
 │── 📄 README.md # Readme file(This file)  
