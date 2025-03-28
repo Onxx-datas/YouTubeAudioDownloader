@@ -1,4 +1,4 @@
-from libs import os, time, yt_dlp, AudioSegment
+from libs import os, time, yt_dlp, AudioSegment, socket, urllib
 
 
 
@@ -38,6 +38,20 @@ def download_audio(video_url, output_folder="C:\\Users\\user\\Desktop\\Musics"):
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([video_url])
         print("Starting next procedure...")
+    except socket.timeout:
+        print(f"Network error: Timeout while downloading {video_url}. Retrying in 10 seconds...")
+        time.sleep(10)
+        download_audio(video_url, output_folder)
+    except urllib.error.URLError:
+        print(f"Network Error: Could not reach YouTube for {video_url}. Check your internet connection.")
+    except yt_dlp.utils.ExtractorError:
+        print(f"Error: The video {video_url} is unavailable (private or removed). Skipping...")
+    except yt_dlp.utils.DownloadError:
+        print(f"Error: Failed to download {video_url}. It may be restricted.")
+    except FileNotFoundError:
+        print(f"Error: Output folder '{output_folder}' not found. Check folder path.")
+    except PermissionError:
+        print(f"Error: No permission to save files in '{output_folder}'. Try another location.")
     except Exception as e:
         print(f"Error downloading {video_url}: {e}")
 
