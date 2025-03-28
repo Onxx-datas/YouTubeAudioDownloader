@@ -48,10 +48,10 @@
 #### After completion, your data will be saved in an mp3 file by default: "C:\\Users\\user\\Desktop\\Musics"
 
 ## 📜File Structure  
-## │── 📄 README.md # Readme file(This file)  
-## │── 📄 links.txt # That contains links form You Tube  
-## │── 📄 requirements.txt # Libraries that you have to use  
-## │── 📄 script.py # Actual code file
+### │── 📄 README.md # Readme file (This file)  
+### │── 📄 links.txt # That contains links from You Tube  
+### │── 📄 requirements.txt # Libraries that you have to use  
+### │── 📄 script.py # Actual code file
 
 
 ## 📞Contact  
