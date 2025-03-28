@@ -15,8 +15,6 @@
 ### ✅ Processes multiple YouTube links from a links.txt file.  
 ### ✅ Completely complies with YouTube's Terms of Service.  
 
-## 🛠 REQUIREMENTS TO USE SCRIPT 🛠
-
 ## 📕Libraries to install
 
 ### pip install audioop-lts  
