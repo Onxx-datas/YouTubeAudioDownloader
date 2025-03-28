@@ -6,27 +6,27 @@
 
 
   
-#### 🔥 FEATURES 🔥
+## 🔥 FEATURES 🔥
 
-✅ Downloads audio from YouTube videos.  
-✅ Uses yt-dlp for high-quality audio extraction.  
-✅ Automatically converts audio to .mp3 format.  
-✅ Saves the downloaded files to the Musics folder on your Desktop.  
-✅ Processes multiple YouTube links from a links.txt file.  
-✅ Completely complies with YouTube's Terms of Service.  
+### ✅ Downloads audio from YouTube videos.  
+### ✅ Uses yt-dlp for high-quality audio extraction.  
+### ✅ Automatically converts audio to .mp3 format.  
+### ✅ Saves the downloaded files to the Musics folder on your Desktop.  
+### ✅ Processes multiple YouTube links from a links.txt file.  
+### ✅ Completely complies with YouTube's Terms of Service.  
 
-#### 🛠 REQUIREMENTS TO USE SCRIPT 🛠
+## 🛠 REQUIREMENTS TO USE SCRIPT 🛠
 
-#### 📕Libraries to install
+## 📕Libraries to install
 
-pip install audioop-lts  
-pip install ffmpeg  
-pip install pydub  
-pip install pytube  
-pip install yt-dlp  
+### pip install audioop-lts  
+### pip install ffmpeg  
+### pip install pydub  
+### pip install pytube  
+### pip install yt-dlp  
 
 
-#### ⚙ SETTINGS THAT YOU CAN ADJUST ⚙
+## ⚙ SETTINGS THAT YOU CAN ADJUST ⚙
 
 ### output_folder="" - Output folder that you want to locate downloaded mp3's
 
@@ -38,7 +38,7 @@ pip install yt-dlp
 
 
 
-#### 📥Setup, Installation
+## 📥Setup, Installation
 
 ### Running and download the script, open a terminal (or Command Prompt) and run:
 ### https://github.com/Onxx-datas/YouTubeAudioReceiver.git 
