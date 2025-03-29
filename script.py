@@ -1,9 +1,12 @@
-from libs import os, time, yt_dlp, AudioSegment, socket, urllib
+import os
+import time
+import yt_dlp
+import socket
+import urllib
+from concurrent.futures import ThreadPoolExecutor
 
-
-
-
-
+# Maximum concurrent downloads
+MAX_THREADS = 3  
 
 def progress_hook(d):
     if d['status'] == 'downloading':
@@ -13,11 +16,6 @@ def progress_hook(d):
     if d['status'] == 'finished':
         title = d.get('filename', 'Unknown Song').split("\\")[-1].replace(".webm", "").replace(".mp4", "")
         print(f"\n{title} Downloaded Completely!")
-
-
-
-
-
 
 def download_audio(video_url, output_folder="C:\\Users\\user\\Desktop\\Musics"):
     ydl_opts = {
@@ -55,26 +53,20 @@ def download_audio(video_url, output_folder="C:\\Users\\user\\Desktop\\Musics"):
     except Exception as e:
         print(f"Error downloading {video_url}: {e}")
 
-
-
-
-
-
 def process_links(file_path="links.txt"):
     try:
         with open(file_path, "r") as file:
-            links = file.readlines()
-        for link in links:
-            link = link.strip()
-            if link:
-                download_audio(link)
-                time.sleep(4)
+            links = [line.strip() for line in file if line.strip()]
+
+        if not links:
+            print("No links found in the file.")
+            return
+
+        with ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
+            executor.map(download_audio, links)
+
     except FileNotFoundError:
         print("Error: links.txt file not found.")
-
-
-
-
 
 if __name__ == "__main__":
     process_links()
