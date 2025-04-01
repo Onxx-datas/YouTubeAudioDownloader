@@ -4,15 +4,18 @@ import urllib
 import yt_dlp
 from PyQt6.QtCore import QThread, pyqtSignal
 
+
 def check_connection():
+    """Check internet connection"""
     try:
         socket.create_connection(("8.8.8.8", 53), timeout=5)
         return True
     except OSError:
         return False
 
+
 class DownloadThread(QThread):
-    progress_signal = pyqtSignal(str)  # Signal to update UI with progress
+    progress_signal = pyqtSignal(str)  # Signal for UI updates
 
     def __init__(self, video_url, output_folder):
         super().__init__()
@@ -20,20 +23,14 @@ class DownloadThread(QThread):
         self.output_folder = output_folder
 
     def run(self):
+        """Main function to download audio"""
         if not check_connection():
             self.progress_signal.emit("Error: No internet connection.")
             return
-        if "youtube.com" not in self.video_url and "youtube.be" not in self.video_url:
+        
+        if "youtube.com" not in self.video_url and "youtu.be" not in self.video_url:
             self.progress_signal.emit(f"Invalid URL: {self.video_url} Skipping...")
             return
-        def progress_hook(d):
-            if d['status'] == 'downloading':
-                percent = d.get('_percent_str', '0%').strip()
-                title = d.get('filename', 'Unknown Song').split("\\")[-1].replace(".webm", "").replace(".mp4", "")
-                self.progress_signal.emit(f"{title} {percent} downloading...")
-            elif d['status'] == 'finished':
-                title = d.get('filename', 'Unknown Song').split("\\")[-1].replace(".webm", "").replace(".mp4", "")
-                self.progress_signal.emit(f"{title} Downloaded Completely!")
 
         ydl_opts = {
             'format': 'bestaudio/best',
@@ -44,9 +41,7 @@ class DownloadThread(QThread):
                 'preferredquality': '192',
             }],
             'quiet': True,
-            'noprogress': True,
-            'no_warnings': True,
-            'progress_hooks': [progress_hook], 
+            'progress_hooks': [self.progress_hook],  # Correct function reference
         }
         try:
             self.progress_signal.emit("Starting download...")
@@ -64,3 +59,13 @@ class DownloadThread(QThread):
         except Exception as e:
             self.progress_signal.emit(f"Unexpected Error: {e}")
 
+    def progress_hook(self, d):
+        """Handles download progress updates"""
+        if d['status'] == 'downloading':
+            percent = d.get('_percent_str', '0%').strip() if '_percent_str' in d else '0%'
+            title = d.get('info_dict', {}).get('title', 'Unknown title')
+            self.progress_signal.emit(f"{title} {percent} downloading...")
+
+        elif d['status'] == 'finished':
+            title = d.get('info_dict', {}).get('title', 'Unknown title')
+            self.progress_signal.emit(f"{title} Downloaded Completely!")

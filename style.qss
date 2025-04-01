@@ -3,6 +3,9 @@ QWidget {
     color: #ffffff;
 }
 #linkButton {
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
     width 115px;
     height: 35px;
     min-width: 115px;
@@ -17,6 +20,9 @@ QWidget {
 }
 
 #downloadButton {
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
     width 410px;
     height: 35px;
     min-width: 410px;
@@ -30,6 +36,9 @@ QWidget {
     font-size: 14px;
 }
 #folderButton {
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
     width 115px;
     height: 35px;
     min-width: 115px;
@@ -65,4 +74,14 @@ QWidget {
 }
 #folderButton:hover {
     background-color: #B81635;
+}
+#urlLabelText {
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+}
+#statusLabel {
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
 }
