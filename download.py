@@ -3,7 +3,7 @@ import socket
 import urllib
 import yt_dlp
 from PyQt6.QtCore import QThread, pyqtSignal
-
+from PyQt6.QtCore import Qt, QTimer
 
 def check_connection():
     """Check internet connection"""
@@ -15,7 +15,8 @@ def check_connection():
 
 
 class DownloadThread(QThread):
-    progress_signal = pyqtSignal(str)  # Signal for UI updates
+    progress_signal = pyqtSignal(str)
+    error_signal = pyqtSignal(str)
 
     def __init__(self, video_url, output_folder):
         super().__init__()
@@ -25,7 +26,7 @@ class DownloadThread(QThread):
     def run(self):
         """Main function to download audio"""
         if not check_connection():
-            self.progress_signal.emit("Error: No internet connection.")
+            self.error_signal.emit("Error: No internet connection.")
             return
         
         if "youtube.com" not in self.video_url and "youtu.be" not in self.video_url:
@@ -40,24 +41,31 @@ class DownloadThread(QThread):
                 'preferredcodec': 'mp3',
                 'preferredquality': '192',
             }],
-            'quiet': True,
+            'quiet': False,
             'progress_hooks': [self.progress_hook],  # Correct function reference
         }
         try:
             self.progress_signal.emit("Starting download...")
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([self.video_url])
-            self.progress_signal.emit("Download Complete!")
+            QTimer.singleShot(2000, lambda: self.progress_signal.emit("Download Complete!"))
+            QTimer.singleShot(2000, lambda: self.status_label.setText("Waiting for input..."))
+
         except socket.timeout:
             self.progress_signal.emit("Error: Network Timeout. Check connection.")
+            QTimer.singleShot(2000, lambda: self.status_label.setText("Waiting for input..."))
         except urllib.error.URLError:
             self.progress_signal.emit("Error: Cannot reach YouTube.")
+            QTimer.singleShot(2000, lambda: self.status_label.setText("Waiting for input..."))
         except yt_dlp.utils.ExtractorError:
             self.progress_signal.emit("Error: Video unavailable.")
+            QTimer.singleShot(2000, lambda: self.status_label.setText("Waiting for input..."))
         except yt_dlp.utils.DownloadError:
             self.progress_signal.emit("Error: Download failed.")
+            QTimer.singleShot(2000, lambda: self.status_label.setText("Waiting for input..."))
         except Exception as e:
             self.progress_signal.emit(f"Unexpected Error: {e}")
+            QTimer.singleShot(2000, lambda: self.status_label.setText("Waiting for input..."))
 
     def progress_hook(self, d):
         """Handles download progress updates"""

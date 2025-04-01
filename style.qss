@@ -12,7 +12,7 @@ QWidget {
     min-height: 35px;
     max-width: 115px;
     max-height: 35px;
-    background-color: #ff1744;
+    background-color: #3654D8;
     color: white;
     border-radius: 5px;
     padding: 8px;
@@ -45,7 +45,7 @@ QWidget {
     min-height: 35px;
     max-width: 115px;
     max-height: 35px;
-    background-color: #ff1744;
+    background-color: #CAA639;
     color: white;
     border-radius: 5px;
     padding: 8px;
@@ -67,15 +67,15 @@ QWidget {
 }
 
 #linkButton:hover {
-    background-color: #B81635;
+    background-color: #2741B1;
 }
 #downloadButton:hover {
     background-color: #B81635;
 }
 #folderButton:hover {
-    background-color: #B81635;
+    background-color: #A0822C;
 }
-#urlLabelText {
+#urlLabel {
     font-size: 15px;
     font-weight: bold;
     color: white;
@@ -84,4 +84,24 @@ QWidget {
     font-size: 15px;
     font-weight: bold;
     color: white;
+}
+#copyrightLabel {
+    font-size: 10px;
+    color: gray; 
+}
+#qualityLabel {
+    font-weight: bold;
+    font-size: 15px;
+    color: white;
+}
+#qualityDropdown {
+    font-size: 14px;
+    color: white;
+    background-color: #333;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 5px;
+}
+#qualityDropdown::drop-down {
+    border: none;
 }
