@@ -1,14 +1,11 @@
 import os
 import sys
 import subprocess
-import winsound
 from download import DownloadThread
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QFileDialog, QVBoxLayout, QWidget
+from PyQt6.QtWidgets import (QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QFileDialog, QVBoxLayout, QWidget, QComboBox)
 from PyQt6.QtCore import Qt, QTimer, pyqtSignal
 from PyQt6.QtGui import QCursor, QIcon
-from PyQt6.QtWidgets import QComboBox
 
-# Global output folder path
 output_folder = os.path.join(os.path.expanduser("~"), "Desktop", "Musics")
 os.makedirs(output_folder, exist_ok=True)
 
@@ -17,27 +14,33 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.init_ui()
 
+        # Set window icon
         icon_path = os.path.abspath("logo.ico")
-        self.setWindowIcon(QIcon(icon_path))
+        if os.path.exists(icon_path):
+            self.setWindowIcon(QIcon(icon_path))
 
+        # Load stylesheet
         if getattr(sys, 'frozen', False):
             base_path = sys._MEIPASS
         else:
             base_path = os.path.dirname(os.path.abspath(__file__))
         style_path = os.path.join(base_path, 'style.qss')
-        with open(style_path, "r") as f:
-            self.setStyleSheet(f.read())
+        if os.path.exists(style_path):
+            with open(style_path, "r") as f:
+                self.setStyleSheet(f.read())
 
     def init_ui(self):
         self.setWindowTitle("YouTube Audio Downloader")
         self.setGeometry(100, 100, 850, 550)
         self.setFixedSize(850, 550)
 
+        # Main layout
         layout = QVBoxLayout()
         central_widget = QWidget(self)
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
+        # UI Elements
         self.url_label = QLabel("Enter YouTube Video URL:", self)
         self.url_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.url_label.setGeometry(70, 50, 600, 30)
@@ -59,7 +62,7 @@ class MainWindow(QMainWindow):
         self.folder_button.setObjectName("folderButton")
         self.folder_button.setGeometry(645, 130, 115, 35)
 
-        self.copyright_label = QLabel("© 2025 Abdulaziz.K. All rights reserved.")
+        self.copyright_label = QLabel("© 2025 Abdulaziz.K. All rights reserved.", self)
         self.copyright_label.setGeometry(660, 515, 300, 30)
         self.copyright_label.setObjectName("copyrightLabel")
 
@@ -72,118 +75,112 @@ class MainWindow(QMainWindow):
         self.quality_label.setGeometry(70, 210, 200, 30)
         self.quality_label.setObjectName("qualityLabel")
 
+        self.cancel_button = QPushButton("Cancel", self)
+        self.cancel_button.setGeometry(700, 440, 90, 25)
+        self.cancel_button.setEnabled(False)
+        self.cancel_button.clicked.connect(self.cancel_downloads)
+        self.cancel_button.setObjectName("cancelButton")
+
         self.quality_dropdown = QComboBox(self)
         self.quality_dropdown.setGeometry(230, 210, 150, 30)
         self.quality_dropdown.addItems(["64kbps", "128kbps", "192kbps", "320kbps"])
-        self.quality_dropdown.setCurrentIndex(1)
+        self.quality_dropdown.setCurrentIndex(1)  # Default to 128kbps
         self.quality_dropdown.setObjectName("qualityDropdown")
 
+        # Connections
         self.open_links_button.clicked.connect(self.open_links_file)
         self.download_button.clicked.connect(self.start_download)
         self.folder_button.clicked.connect(self.select_folder)
-        self.copyright_label.setParent(self)
 
+        # Cursors
         self.open_links_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.download_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.folder_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.cancel_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.url_input.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
 
     def open_links_file(self):
         file_path = "links.txt"
-
         if not os.path.exists(file_path):
             with open(file_path, "w") as f:
                 f.write("")
-        if os.name == "nt":
-            os.startfile(file_path)
-        else:
-            subprocess.run(["xdg-open", file_path])
-
-    def get_quality_format(self, quality):
-        """Map the selected quality to yt-dlp format options."""
-        quality_map = {
-            "Low": "bestaudio[abr<128]/best",  # Audio bitrate lower than 128 kbps (low quality)
-            "Medium": "bestaudio[abr>128]/best",  # Audio bitrate greater than 128 kbps (medium quality)
-            "High": "bestaudio[abr>256]/best",  # Audio bitrate greater than 256 kbps (high quality)
-            "Lossless": "bestaudio[ext=m4a]/best"  # Lossless audio format
-        }
         
-        return quality_map.get(quality, "bestaudio")  # Default to best audio if invalid choice
+        try:
+            if os.name == "nt":
+                os.startfile(file_path)
+            else:
+                subprocess.run(["xdg-open", file_path])
+        except Exception as e:
+            self.status_label.setText(f"Error opening file: {str(e)}")
 
     def start_download(self):
         self.download_button.setEnabled(False)
+        self.cancel_button.setEnabled(True)
+        self.thread = []
         link = self.url_input.text().strip()
         
-        # Get the selected quality and map it
+        # Quality selection
         selected_quality = self.quality_dropdown.currentText()
-        quality_option = self.get_quality_format(selected_quality)  # Map to yt-dlp format
-
-        
         quality_map = {
             "64kbps": "64",
             "128kbps": "128",
             "192kbps": "192",
             "320kbps": "320"
         }
-        preferred_quality = quality_map.get(selected_quality)
-
-
-        ydl_opts = {
-            'format': quality_option,
-            'outtmpl': os.path.join(output_folder, '%(title)s.%(ext)s'),
-            'postprocessors': [{
-                'key': 'FFmpegAudio',
-                'preferredcodec': 'mp3',
-                'preferredquality': preferred_quality,
-            }]
-        }
+        preferred_quality = quality_map.get(selected_quality, "192")  # Default to 192 if invalid
 
         if link:
             links = [link]
-        else:   
+        else:
             file_path = "links.txt"
             MAX_LINKS = 12
 
             if not os.path.exists(file_path):
-                self.status_label.setText("Error: links.txt not found.")
-                self.download_button.setEnabled(True)
-                QTimer.singleShot(3000, lambda: self.status_label.setText("Waiting for input..."))
+                self.show_error("Error: links.txt not found.")
                 return
 
             with open(file_path, "r") as f:
                 links = [line.strip() for line in f if line.strip()]
 
             if not links:
-                self.status_label.setText("No links found in links.txt.")
-                self.download_button.setEnabled(True)
-                QTimer.singleShot(3000, lambda: self.status_label.setText("Waiting for input..."))
+                self.show_error("No links found in links.txt.")
                 return
             if len(links) > MAX_LINKS:
-                self.status_label.setText(f"Error: Too many links! Limit is {MAX_LINKS}")
-                self.download_button.setEnabled(True)
-                QTimer.singleShot(3000, lambda: self.status_label.setText("Waiting for input..."))
+                self.show_error(f"Error: Too many links! Limit is {MAX_LINKS}")
                 return
 
-        self.status_label.setText("Starting downloading...")
+        self.status_label.setText("Starting download...")
 
         self.threads = []
-
         for link in links:
-            if "youtube.com" not in link and "youtube.be" not in link:
-                self.status_label.setText(f"Invalid URL: {link} Skipping...")
-                self.download_button.setEnabled(True)
-                # Give time to see the error message before resetting
-                QTimer.singleShot(3000, lambda: self.status_label.setText("Waiting for input..."))  # 2 seconds delay
-                return
-            download_thread = DownloadThread(link, output_folder)
-            download_thread.progress_signal.connect(self.update_progress)  # Update progress label
-            download_thread.finished.connect(self.check_all_downloads_done)  # Check completion
+            if not self.validate_url(link):
+                self.show_error(f"Invalid URL: {link}")
+                continue
+            
+            download_thread = DownloadThread(link, output_folder, preferred_quality)
+            download_thread.progress_signal.connect(self.update_progress)
+            download_thread.error_signal.connect(self.show_error)
+            download_thread.finished.connect(self.check_all_downloads_done)
             download_thread.start()
             self.threads.append(download_thread)
+    def cancel_downloads(self):
+        for thread in self.threads:
+            thread.stop()
+        self.status_label.setText("Downlaod canceled")
+        self.download_button.setEnabled(True)
+        self.cancel_button.setEnabled(False)
+        QTimer.singleShot(3000, lambda: self.status_label.setText("Waiting for input..."))
+
+    def validate_url(self, url):
+        return "youtube.com" in url or "youtu.be" in url
 
     def update_progress(self, message):
-        """Update progress signal."""
         self.status_label.setText(message)
+
+    def show_error(self, message):
+        self.status_label.setText(message)
+        self.download_button.setEnabled(True)
+        QTimer.singleShot(3000, lambda: self.status_label.setText("Waiting for input..."))
 
     def check_all_downloads_done(self):
         if all(not thread.isRunning() for thread in self.threads):
@@ -201,7 +198,8 @@ class MainWindow(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     icon_path = os.path.abspath("logo.ico")
-    app.setWindowIcon(QIcon(icon_path))
+    if os.path.exists(icon_path):
+        app.setWindowIcon(QIcon(icon_path))
     window = MainWindow()
     window.show()
     sys.exit(app.exec())
