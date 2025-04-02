@@ -5,7 +5,6 @@ import socket
 import urllib
 from concurrent.futures import ThreadPoolExecutor
 
-# Maximum concurrent downloads
 MAX_THREADS = 3  
 
 def progress_hook(d):
