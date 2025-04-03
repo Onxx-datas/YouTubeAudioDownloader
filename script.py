@@ -14,7 +14,7 @@ def progress_hook(d):
         print(f"\r{title} {percent} downloading", end="", flush=True)
     if d['status'] == 'finished':
         title = d.get('filename', 'Unknown Song').split("\\")[-1].replace(".webm", "").replace(".mp4", "")
-        print(f"\n{title} Downloaded Completely!")
+        print(f"\n Downloaded Completely!")
 
 def download_audio(video_url, output_folder="C:\\Users\\user\\Desktop\\Musics"):
     ydl_opts = {

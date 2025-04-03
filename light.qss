@@ -1,5 +1,5 @@
 QWidget {
-    background-color: #282727;
+    background-color: #DEDFDE;
     color: #ffffff;
 }
 #linkButton {
@@ -12,7 +12,7 @@ QWidget {
     min-height: 35px;
     max-width: 115px;
     max-height: 35px;
-    background-color: #1e5c82;
+    background-color: #1DB954;
     color: white;
     border-radius: 5px;
     padding: 8px;
@@ -29,7 +29,7 @@ QWidget {
     min-height: 35px;
     max-width: 410px;
     max-height: 35px;
-    background-color: #e11d1a;
+    background-color: #1DB954;
     color: white;
     border-radius: 5px;
     padding: 8px;
@@ -45,7 +45,7 @@ QWidget {
     min-height: 35px;
     max-width: 115px;
     max-height: 35px;
-    background-color: #efa625;
+    background-color: #1DB954;
     color: white;
     border-radius: 5px;
     padding: 8px;
@@ -62,18 +62,18 @@ QWidget {
     border-radius: 5px;
     padding: 5px;
     font-size: 14px;
-    background-color: #262626;
+    background-color: #121212;
     selection-background-color: #FFFFFF;
 }
 
 #linkButton:hover {
-    background-color: #0f5176;
+    background-color: #1AA34A;
 }
 #downloadButton:hover {
-    background-color: #d1020a;
+    background-color: #1AA34A;
 }
 #folderButton:hover {
-    background-color: #d28f01;
+    background-color: #1AA34A;
 }
 #urlLabel {
     font-size: 15px;
@@ -97,7 +97,7 @@ QWidget {
 #qualityDropdown {
     font-size: 14px;
     color: white;
-    background-color: #282727;
+    background-color: #121212;
     border: 1px solid gray;
     border-radius: 5px;
     padding: 5px;
@@ -115,12 +115,12 @@ QWidget {
     min-height: 15px;
     max-width: 60px;
     max-height: 15px;
-    background-color: #7b0c0e;
+    background-color: #1DB954;
     color: white;
     border-radius: 5px;
     padding: 8px;
     font-size: 14px;
 }
 #cancelButton:hover {
-    background-color: #6c0006;
+    background-color: #1AA34A;
 }

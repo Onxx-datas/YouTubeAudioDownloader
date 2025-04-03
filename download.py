@@ -54,14 +54,14 @@ class DownloadThread(QThread):
                 title = info.get('title', 'Unknown')
 
                 if self._stop_event.is_set():
-                    self.progress_signal.emit(f"{title} - Canceled")
+                    self.progress_signal.emit("Waiting for input...")
                     self.finished.emit()
                     return
                 
                 ydl.download([self.video_url])  # Start the download
 
                 if self._stop_event.is_set():
-                    self.progress_signal.emit(f"{title} - Canceled")
+                    self.progress_signal.emit("Waiting for input...")
                     self.finished.emit()
                     return
 
@@ -77,10 +77,10 @@ class DownloadThread(QThread):
         if d['status'] == 'downloading':
             percent = d.get('_percent_str', '0%').strip()
             title = d.get('info_dict', {}).get('title', 'Unknown')
-            self.progress_signal.emit(f"{title} - {percent}")
+            self.progress_signal.emit("Waiting for input...")
         elif d['status'] == 'finished':
             title = d.get('info_dict', {}).get('title', 'Unknown')
-            self.progress_signal.emit(f"✅ {title} - Complete!")
+            self.progress_signal.emit("Waiting for input...")
 
     def stop(self):
         self._stop_event.set()

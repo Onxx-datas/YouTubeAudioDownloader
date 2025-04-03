@@ -14,7 +14,14 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.init_ui()
 
-        # Set window icon
+        if os.path.exists("config.txt"):
+            with open("config.txt", "r") as f:
+                self.current_theme = f.read().strip()
+        else:
+            self.current_theme = "dark"
+        
+        self.set_theme(self.current_theme)
+
         icon_path = os.path.abspath("logo.ico")
         if os.path.exists(icon_path):
             self.setWindowIcon(QIcon(icon_path))
@@ -24,7 +31,7 @@ class MainWindow(QMainWindow):
             base_path = sys._MEIPASS
         else:
             base_path = os.path.dirname(os.path.abspath(__file__))
-        style_path = os.path.join(base_path, 'style.qss')
+        style_path = os.path.join(base_path, 'dark.qss')
         if os.path.exists(style_path):
             with open(style_path, "r") as f:
                 self.setStyleSheet(f.read())
@@ -77,9 +84,17 @@ class MainWindow(QMainWindow):
 
         self.cancel_button = QPushButton("Cancel", self)
         self.cancel_button.setGeometry(700, 440, 90, 25)
-        self.cancel_button.setEnabled(False)
+        self.cancel_button.setVisible(False)
         self.cancel_button.clicked.connect(self.cancel_downloads)
         self.cancel_button.setObjectName("cancelButton")
+
+        self.theme_button = QPushButton(self)
+        self.theme_button.setGeometry(770, 20, 40, 40)  # Adjust position & size
+        self.theme_button.setObjectName("themeButton")
+        self.theme_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.current_theme = "dark"
+        self.set_theme(self.current_theme)
+        self.theme_button.clicked.connect(self.toggle_theme)
 
         self.quality_dropdown = QComboBox(self)
         self.quality_dropdown.setGeometry(230, 210, 150, 30)
@@ -115,7 +130,7 @@ class MainWindow(QMainWindow):
 
     def start_download(self):
         self.download_button.setEnabled(False)
-        self.cancel_button.setEnabled(True)
+        self.cancel_button.setVisible(True)
         self.thread = []
         link = self.url_input.text().strip()
         
@@ -168,8 +183,27 @@ class MainWindow(QMainWindow):
             thread.stop()
         self.status_label.setText("Downlaod canceled")
         self.download_button.setEnabled(True)
-        self.cancel_button.setEnabled(False)
-        QTimer.singleShot(3000, lambda: self.status_label.setText("Waiting for input..."))
+        self.cancel_button.setVisible(False)
+        QTimer.singleShot(2500, lambda: self.status_label.setText("Waiting for input..."))
+
+    def toggle_theme(self):
+        self.current_theme = "light" if self.current_theme == "dark" else "dark"
+        self.set_theme(self.current_theme)
+
+    def set_theme(self, theme):
+        self.current_theme = theme
+        theme_file = f"{theme}.qss"
+        icon_file = os.path.join("assets", f"{theme}.png")
+
+        if os.path.exists(theme_file):
+            with open(theme_file, "r") as f:
+                self.setStyleSheet(f.read())
+        
+        if os.path.exists(icon_file):
+            self.theme_button.setIcon(QIcon(icon_file))
+
+        with open("config.txt", "w") as f:
+            f.write(theme)
 
     def validate_url(self, url):
         return "youtube.com" in url or "youtu.be" in url
@@ -185,7 +219,8 @@ class MainWindow(QMainWindow):
     def check_all_downloads_done(self):
         if all(not thread.isRunning() for thread in self.threads):
             self.download_button.setEnabled(True)
-            self.status_label.setText("All downloads complete!")
+            self.status_label.setText("Waiting for input...")
+            self.cancel_button.setVisible(False)
             QTimer.singleShot(3000, lambda: self.status_label.setText("Waiting for input..."))
 
     def select_folder(self):

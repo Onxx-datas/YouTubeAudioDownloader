@@ -1,0 +1,126 @@
+QWidget {
+    background-color: #121212;
+    color: #ffffff;
+}
+#linkButton {
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    width 115px;
+    height: 35px;
+    min-width: 115px;
+    min-height: 35px;
+    max-width: 115px;
+    max-height: 35px;
+    background-color: #1DB954;
+    color: white;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 14px;
+}
+
+#downloadButton {
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    width 410px;
+    height: 35px;
+    min-width: 410px;
+    min-height: 35px;
+    max-width: 410px;
+    max-height: 35px;
+    background-color: #1DB954;
+    color: white;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 14px;
+}
+#folderButton {
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    width 115px;
+    height: 35px;
+    min-width: 115px;
+    min-height: 35px;
+    max-width: 115px;
+    max-height: 35px;
+    background-color: #1DB954;
+    color: white;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 14px;
+}
+#urlInput {
+    width 690px;
+    height: 20px;
+    min-width: 690px;
+    min-height: 20px;
+    max-width: 690px;
+    max-height: 20px;
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+    background-color: #121212;
+    selection-background-color: #FFFFFF;
+}
+
+#linkButton:hover {
+    background-color: #1AA34A;
+}
+#downloadButton:hover {
+    background-color: #1AA34A;
+}
+#folderButton:hover {
+    background-color: #1AA34A;
+}
+#urlLabel {
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+}
+#statusLabel {
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+}
+#copyrightLabel {
+    font-size: 10px;
+    color: gray; 
+}
+#qualityLabel {
+    font-weight: bold;
+    font-size: 15px;
+    color: white;
+}
+#qualityDropdown {
+    font-size: 14px;
+    color: white;
+    background-color: #121212;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 5px;
+}
+#qualityDropdown::drop-down {
+    border: none;
+}
+#cancelButton {
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    width 60px;
+    height: 15px;
+    min-width: 60px;
+    min-height: 15px;
+    max-width: 60px;
+    max-height: 15px;
+    background-color: #1DB954;
+    color: white;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 14px;
+}
+#cancelButton:hover {
+    background-color: #1AA34A;
+}
