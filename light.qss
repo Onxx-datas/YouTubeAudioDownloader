@@ -62,7 +62,7 @@ QWidget {
     border-radius: 5px;
     padding: 5px;
     font-size: 14px;
-    background-color: #121212;
+    background-color: #DEDFDE;
     selection-background-color: #FFFFFF;
 }
 
@@ -78,37 +78,39 @@ QWidget {
 #urlLabel {
     font-size: 15px;
     font-weight: bold;
-    color: white;
+    color: black;
 }
 #statusLabel {
     font-size: 15px;
     font-weight: bold;
-    color: white;
+    color: black;
 }
 #copyrightLabel {
     font-size: 10px;
-    color: gray; 
+    color: #303030; 
 }
 #qualityLabel {
     font-weight: bold;
     font-size: 15px;
-    color: white;
+    color: black;
 }
 #qualityDropdown {
     font-size: 14px;
-    color: white;
-    background-color: #121212;
-    border: 1px solid gray;
+    color: #333333;
+    background-color: #DEDFDE;
+    border: 1px solid #303030;
     border-radius: 5px;
     padding: 5px;
 }
 #qualityDropdown::drop-down {
     border: none;
 }
+#qualityDropdown QAbstractItemView {
+    color: black; 
+}
 #cancelButton {
     font-size: 15px;
     font-weight: bold;
-    color: white;
     width 60px;
     height: 15px;
     min-width: 60px;
