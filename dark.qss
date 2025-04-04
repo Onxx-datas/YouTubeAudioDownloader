@@ -65,6 +65,22 @@ QWidget {
     background-color: #121212;
     selection-background-color: #FFFFFF;
 }
+#themeButton {
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+    width 115px;
+    height: 35px;
+    min-width: 115px;
+    min-height: 35px;
+    max-width: 115px;
+    max-height: 35px;
+    background-color: #1DB954;
+    color: white;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 14px;
+}
 
 #linkButton:hover {
     background-color: #1AA34A;
@@ -78,7 +94,7 @@ QWidget {
 #urlLabel {
     font-size: 15px;
     font-weight: bold;
-    color: black;
+    color: #ffffff;
 }
 #statusLabel {
     font-size: 15px;
