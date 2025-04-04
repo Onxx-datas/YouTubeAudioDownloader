@@ -1,16 +1,20 @@
 import os
 import sys
 import subprocess
+from PyQt6.QtCore import QSize
 from download import DownloadThread
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QLabel, QLineEdit, 
                             QPushButton, QFileDialog, QVBoxLayout, QWidget, 
-                            QComboBox)
+                            QComboBox, QListWidget, QDockWidget)
 from PyQt6.QtCore import Qt, QTimer, pyqtSignal
 from PyQt6.QtGui import QCursor, QIcon
+from PyQt6.QtWidgets import QDockWidget, QMenu
+from PyQt6.QtGui import QAction
+
 
 # Global configuration
 DEFAULT_THEME = "dark"
-MAX_LINKS = 12
+MAX_LINKS = 15
 
 class YouTubeDownloader(QMainWindow):
     def __init__(self):
@@ -23,8 +27,6 @@ class YouTubeDownloader(QMainWindow):
         # Setup UI
         self.init_ui()
         self.set_theme(self.current_theme)
-        
-        # Set window icon if available
         self.set_window_icon()
 
     def init_paths(self):
@@ -67,27 +69,66 @@ class YouTubeDownloader(QMainWindow):
             if hasattr(QApplication.instance(), 'setWindowIcon'):
                 QApplication.instance().setWindowIcon(QIcon(icon_path))
 
+    def create_menu_button(self):
+        """Create burger menu button in top-left corner"""
+        self.menu_button = QPushButton(self)
+        self.menu_button.setGeometry(20, 20, 40, 40)
+        self.menu_button.setObjectName("menuButton")
+        self.menu_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.menu_button.setIconSize(QSize(32, 32))
+        self.update_menu_icon()
+        self.menu = QMenu(self)
+        self.create_menu_actions()
+        self.menu_button.clicked.connect(lambda: self.menu.exec(self.menu_button.mapToGlobal(
+        self.menu_button.rect().bottomLeft())))
+
+    def create_menu_actions(self):
+        """Create actions for the menu"""
+        # Add your menu items here
+        about_action = QAction("About", self)
+        settings_action = QAction("Settings", self)
+        exit_action = QAction("Exit", self)
+        
+        # Connect actions to functions
+        exit_action.triggered.connect(self.close)
+        
+        # Add actions to menu
+        self.menu.addAction(about_action)
+        self.menu.addAction(settings_action)
+        self.menu.addSeparator()
+        self.menu.addAction(exit_action)
+
+    def update_menu_icon(self):
+        """Update menu icon based on current theme"""
+        if getattr(sys, 'frozen', False):
+            base_path = sys._MEIPASS
+        else:
+            base_path = os.path.dirname(os.path.abspath(__file__))
+
+        print(f"Current theme: {self.current_theme}")
+        icon_file = os.path.join(base_path, 'assets', f'burger_{self.current_theme}.png')
+        print(f"Looking for icon at: {icon_file}")  # Debug
+        if os.path.exists(icon_file):
+            self.menu_button.setIcon(QIcon(icon_file))
+            self.menu_button.setIconSize(QSize(32, 32))
+
     def init_ui(self):
-        """Initialize all UI components"""
         self.setWindowTitle("YouTube Audio Downloader")
         self.setGeometry(100, 100, 850, 550)
         self.setFixedSize(850, 550)
-
-        # Main layout
         layout = QVBoxLayout()
         central_widget = QWidget(self)
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
+        self.create_menu_button()
+        self.create_url_input()
 
-        # Create UI elements
         self.create_url_input()
         self.create_action_buttons()
         self.create_status_display()
         self.create_quality_selector()
         self.create_theme_button()
         self.create_copyright_label()
-
-        # Setup connections
         self.setup_connections()
 
     def create_url_input(self):
@@ -172,7 +213,6 @@ class YouTubeDownloader(QMainWindow):
         self.save_theme()
 
     def set_theme(self, theme):
-        """Apply theme to application"""
         if not self.validate_theme(theme):
             theme = DEFAULT_THEME
             
@@ -193,6 +233,7 @@ class YouTubeDownloader(QMainWindow):
         icon_file = os.path.join(base_path, 'assets', f'{theme}.png')
         if os.path.exists(icon_file):
             self.theme_button.setIcon(QIcon(icon_file))
+        self.update_menu_icon()
 
     def save_theme(self):
         """Save current theme to config"""
@@ -316,7 +357,7 @@ class YouTubeDownloader(QMainWindow):
         if folder:
             self.output_folder = folder
             self.status_label.setText(f"Saving to: {self.output_folder}")
-
+    
 def main():
     app = QApplication(sys.argv)
     
