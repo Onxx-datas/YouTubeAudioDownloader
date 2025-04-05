@@ -10,32 +10,22 @@ from PyQt6.QtCore import Qt, QTimer, pyqtSignal
 from PyQt6.QtGui import QCursor, QIcon
 from PyQt6.QtWidgets import QDockWidget, QMenu
 from PyQt6.QtGui import QAction
-
-
-# Global configuration
 DEFAULT_THEME = "dark"
 MAX_LINKS = 15
-
 class YouTubeDownloader(QMainWindow):
     def __init__(self):
         super().__init__()
-        
-        # Initialize paths and configuration
+
         self.output_folder = self.init_paths()
         self.current_theme = self.load_theme_config()
-        
-        # Setup UI
+
         self.init_ui()
         self.set_theme(self.current_theme)
         self.set_window_icon()
 
     def init_paths(self):
-        """Initialize all required paths"""
-        # Create output folder
         output_folder = os.path.join(os.path.expanduser("~"), "Desktop", "Musics")
         os.makedirs(output_folder, exist_ok=True)
-        
-        # Config paths
         self.config_folder = os.path.join(os.getenv('LOCALAPPDATA', ''), "YouTubeExtractor")
         self.config_path = os.path.join(self.config_folder, "config.txt")
         os.makedirs(self.config_folder, exist_ok=True)
@@ -43,7 +33,6 @@ class YouTubeDownloader(QMainWindow):
         return output_folder
 
     def load_theme_config(self):
-        """Load theme from config file or create default"""
         try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, "r", encoding="utf-8") as f:
@@ -58,11 +47,9 @@ class YouTubeDownloader(QMainWindow):
             return DEFAULT_THEME
 
     def validate_theme(self, theme):
-        """Check if theme is valid"""
         return theme in ("dark", "light")
 
     def set_window_icon(self):
-        """Set application window icon"""
         icon_path = os.path.abspath("logo.ico")
         if os.path.exists(icon_path):
             self.setWindowIcon(QIcon(icon_path))
@@ -70,7 +57,6 @@ class YouTubeDownloader(QMainWindow):
                 QApplication.instance().setWindowIcon(QIcon(icon_path))
 
     def create_menu_button(self):
-        """Create burger menu button in top-left corner"""
         self.menu_button = QPushButton(self)
         self.menu_button.setGeometry(20, 20, 40, 40)
         self.menu_button.setObjectName("menuButton")
@@ -83,23 +69,18 @@ class YouTubeDownloader(QMainWindow):
         self.menu_button.rect().bottomLeft())))
 
     def create_menu_actions(self):
-        """Create actions for the menu"""
-        # Add your menu items here
         about_action = QAction("About", self)
         settings_action = QAction("Settings", self)
         exit_action = QAction("Exit", self)
-        
-        # Connect actions to functions
+
         exit_action.triggered.connect(self.close)
-        
-        # Add actions to menu
+
         self.menu.addAction(about_action)
         self.menu.addAction(settings_action)
         self.menu.addSeparator()
         self.menu.addAction(exit_action)
 
     def update_menu_icon(self):
-        """Update menu icon based on current theme"""
         if getattr(sys, 'frozen', False):
             base_path = sys._MEIPASS
         else:
@@ -132,7 +113,6 @@ class YouTubeDownloader(QMainWindow):
         self.setup_connections()
 
     def create_url_input(self):
-        """Create URL input field"""
         self.url_label = QLabel("Enter YouTube Video URL:", self)
         self.url_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.url_label.setGeometry(70, 50, 600, 30)
@@ -144,7 +124,6 @@ class YouTubeDownloader(QMainWindow):
         self.url_input.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
 
     def create_action_buttons(self):
-        """Create action buttons"""
         self.open_links_button = QPushButton("Open links.txt", self)
         self.open_links_button.setObjectName("linkButton")
         self.open_links_button.setGeometry(70, 130, 115, 35)
@@ -161,7 +140,6 @@ class YouTubeDownloader(QMainWindow):
         self.folder_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
     def create_status_display(self):
-        """Create status display elements"""
         self.status_label = QLabel("Waiting for input...", self)
         self.status_label.setObjectName("statusLabel")
         self.status_label.setGeometry(70, 440, 400, 50)
@@ -175,7 +153,6 @@ class YouTubeDownloader(QMainWindow):
         self.cancel_button.clicked.connect(self.cancel_downloads)
 
     def create_quality_selector(self):
-        """Create audio quality selector"""
         self.quality_label = QLabel("Select Audio Quality:", self)
         self.quality_label.setGeometry(70, 210, 200, 30)
         self.quality_label.setObjectName("qualityLabel")
@@ -187,7 +164,6 @@ class YouTubeDownloader(QMainWindow):
         self.quality_dropdown.setObjectName("qualityDropdown")
 
     def create_theme_button(self):
-        """Create theme toggle button"""
         self.theme_button = QPushButton(self)
         self.theme_button.setGeometry(770, 20, 40, 40)
         self.theme_button.setObjectName("themeButton")
@@ -195,19 +171,16 @@ class YouTubeDownloader(QMainWindow):
         self.theme_button.clicked.connect(self.toggle_theme)
 
     def create_copyright_label(self):
-        """Create copyright label"""
         self.copyright_label = QLabel("© 2025 Abdulaziz.K. All rights reserved.", self)
         self.copyright_label.setGeometry(660, 515, 300, 30)
         self.copyright_label.setObjectName("copyrightLabel")
 
     def setup_connections(self):
-        """Setup button connections"""
         self.open_links_button.clicked.connect(self.open_links_file)
         self.download_button.clicked.connect(self.start_download)
         self.folder_button.clicked.connect(self.select_folder)
 
     def toggle_theme(self):
-        """Toggle between dark and light theme"""
         self.current_theme = "light" if self.current_theme == "dark" else "dark"
         self.set_theme(self.current_theme)
         self.save_theme()
@@ -217,8 +190,6 @@ class YouTubeDownloader(QMainWindow):
             theme = DEFAULT_THEME
             
         self.current_theme = theme
-        
-        # Load stylesheet
         if getattr(sys, 'frozen', False):
             base_path = sys._MEIPASS
         else:
@@ -228,15 +199,12 @@ class YouTubeDownloader(QMainWindow):
         if os.path.exists(theme_file):
             with open(theme_file, "r", encoding="utf-8") as f:
                 self.setStyleSheet(f.read())
-        
-        # Set theme button icon
         icon_file = os.path.join(base_path, 'assets', f'{theme}.png')
         if os.path.exists(icon_file):
             self.theme_button.setIcon(QIcon(icon_file))
         self.update_menu_icon()
 
     def save_theme(self):
-        """Save current theme to config"""
         try:
             with open(self.config_path, "w", encoding="utf-8") as f:
                 f.write(self.current_theme)
@@ -244,7 +212,6 @@ class YouTubeDownloader(QMainWindow):
             print(f"Failed to save theme: {e}")
 
     def open_links_file(self):
-        """Open links.txt file in default editor"""
         file_path = "links.txt"
         if not os.path.exists(file_path):
             with open(file_path, "w", encoding="utf-8") as f:
@@ -259,11 +226,8 @@ class YouTubeDownloader(QMainWindow):
             self.status_label.setText(f"Error opening file: {str(e)}")
 
     def start_download(self):
-        """Start downloading audio from YouTube"""
         self.download_button.setEnabled(False)
         self.cancel_button.setVisible(True)
-        
-        # Get download links
         link = self.url_input.text().strip()
         if link:
             links = [link]
@@ -272,7 +236,6 @@ class YouTubeDownloader(QMainWindow):
             if not links:
                 return
 
-        # Get selected quality
         quality_map = {
             "64kbps": "64",
             "128kbps": "128",
@@ -286,7 +249,6 @@ class YouTubeDownloader(QMainWindow):
         self.start_download_threads(links, preferred_quality)
 
     def get_links_from_file(self):
-        """Get links from links.txt file"""
         file_path = "links.txt"
         if not os.path.exists(file_path):
             self.show_error("Error: links.txt not found.")
@@ -306,7 +268,6 @@ class YouTubeDownloader(QMainWindow):
         return links
 
     def start_download_threads(self, links, quality):
-        """Start download threads for each link"""
         self.threads = []
         for link in links:
             if not self.validate_url(link):
@@ -321,7 +282,6 @@ class YouTubeDownloader(QMainWindow):
             self.threads.append(download_thread)
 
     def cancel_downloads(self):
-        """Cancel all running downloads"""
         for thread in self.threads:
             thread.stop()
         self.status_label.setText("Download canceled")
@@ -330,21 +290,17 @@ class YouTubeDownloader(QMainWindow):
         QTimer.singleShot(2500, lambda: self.status_label.setText("Waiting for input..."))
 
     def validate_url(self, url):
-        """Validate YouTube URL"""
         return "youtube.com" in url or "youtu.be" in url
 
     def update_progress(self, message):
-        """Update download progress status"""
         self.status_label.setText(message)
 
     def show_error(self, message):
-        """Show error message"""
         self.status_label.setText(message)
         self.download_button.setEnabled(True)
         QTimer.singleShot(3000, lambda: self.status_label.setText("Waiting for input..."))
 
     def check_all_downloads_done(self):
-        """Check if all downloads are complete"""
         if all(not thread.isRunning() for thread in self.threads):
             self.download_button.setEnabled(True)
             self.status_label.setText("All downloads complete!")
@@ -352,7 +308,6 @@ class YouTubeDownloader(QMainWindow):
             QTimer.singleShot(3000, lambda: self.status_label.setText("Waiting for input..."))
 
     def select_folder(self):
-        """Select output folder for downloads"""
         folder = QFileDialog.getExistingDirectory(self, "Select Save Folder")
         if folder:
             self.output_folder = folder
@@ -360,15 +315,11 @@ class YouTubeDownloader(QMainWindow):
     
 def main():
     app = QApplication(sys.argv)
-    
-    # Set application icon if available
     icon_path = os.path.abspath("logo.ico")
     if os.path.exists(icon_path):
         app.setWindowIcon(QIcon(icon_path))
-    
     window = YouTubeDownloader()
     window.show()
     sys.exit(app.exec())
-
 if __name__ == "__main__":
     main()

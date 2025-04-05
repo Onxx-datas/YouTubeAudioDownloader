@@ -4,9 +4,7 @@ import yt_dlp
 import socket
 import urllib
 from concurrent.futures import ThreadPoolExecutor
-
 MAX_THREADS = 3  
-
 def progress_hook(d):
     if d['status'] == 'downloading':
         percent = d.get('_percent_str', '0%').strip()
@@ -15,7 +13,6 @@ def progress_hook(d):
     if d['status'] == 'finished':
         title = d.get('filename', 'Unknown Song').split("\\")[-1].replace(".webm", "").replace(".mp4", "")
         print(f"\n Downloaded Completely!")
-
 def download_audio(video_url, output_folder="C:\\Users\\user\\Desktop\\Musics"):
     ydl_opts = {
         'format': 'bestaudio/best',
@@ -66,6 +63,5 @@ def process_links(file_path="links.txt"):
 
     except FileNotFoundError:
         print("Error: links.txt file not found.")
-
 if __name__ == "__main__":
     process_links()

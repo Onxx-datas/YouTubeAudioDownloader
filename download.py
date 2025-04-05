@@ -22,7 +22,7 @@ class DownloadThread(QThread):
         self.video_url = video_url
         self.output_folder = output_folder
         self.quality = quality
-        self._stop_event = threading.Event()  # Event for stopping
+        self._stop_event = threading.Event()
 
     def run(self):
         if not check_connection():
@@ -58,7 +58,7 @@ class DownloadThread(QThread):
                     self.finished.emit()
                     return
                 
-                ydl.download([self.video_url])  # Start the download
+                ydl.download([self.video_url])
 
                 if self._stop_event.is_set():
                     self.progress_signal.emit("Waiting for input...")
