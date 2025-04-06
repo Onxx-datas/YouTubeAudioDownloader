@@ -115,28 +115,28 @@ class YouTubeDownloader(QMainWindow):
     def create_url_input(self):
         self.url_label = QLabel("Enter YouTube Video URL:", self)
         self.url_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        self.url_label.setGeometry(70, 50, 600, 30)
+        self.url_label.setGeometry(70, 70, 600, 30)
         self.url_label.setObjectName("urlLabel")
 
         self.url_input = QLineEdit(self)
         self.url_input.setObjectName("urlInput")
-        self.url_input.setGeometry(70, 80, 600, 30)
+        self.url_input.setGeometry(70, 100, 600, 30)
         self.url_input.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
 
     def create_action_buttons(self):
         self.open_links_button = QPushButton("Open links.txt", self)
         self.open_links_button.setObjectName("linkButton")
-        self.open_links_button.setGeometry(70, 130, 115, 35)
+        self.open_links_button.setGeometry(70, 150, 115, 35)
         self.open_links_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.download_button = QPushButton("Download MP3", self)
         self.download_button.setObjectName("downloadButton")
-        self.download_button.setGeometry(210, 130, 610, 35)
+        self.download_button.setGeometry(210, 150, 610, 35)
         self.download_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
         self.folder_button = QPushButton("Saving folder", self)
         self.folder_button.setObjectName("folderButton")
-        self.folder_button.setGeometry(645, 130, 115, 35)
+        self.folder_button.setGeometry(645, 150, 115, 35)
         self.folder_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
     def create_status_display(self):
@@ -154,18 +154,18 @@ class YouTubeDownloader(QMainWindow):
 
     def create_quality_selector(self):
         self.quality_label = QLabel("Select Audio Quality:", self)
-        self.quality_label.setGeometry(70, 210, 200, 30)
+        self.quality_label.setGeometry(70, 230, 200, 30)
         self.quality_label.setObjectName("qualityLabel")
 
         self.quality_dropdown = QComboBox(self)
-        self.quality_dropdown.setGeometry(230, 210, 150, 30)
+        self.quality_dropdown.setGeometry(230, 230, 150, 30)
         self.quality_dropdown.addItems(["64kbps", "128kbps", "192kbps", "320kbps"])
         self.quality_dropdown.setCurrentIndex(1)  # Default to 128kbps
         self.quality_dropdown.setObjectName("qualityDropdown")
 
     def create_theme_button(self):
         self.theme_button = QPushButton(self)
-        self.theme_button.setGeometry(770, 20, 40, 40)
+        self.theme_button.setGeometry(790, 20, 40, 40)
         self.theme_button.setObjectName("themeButton")
         self.theme_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.theme_button.clicked.connect(self.toggle_theme)

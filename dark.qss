@@ -2,6 +2,19 @@ QWidget {
     background-color: #121212;
     color: #ffffff;
 }
+QLineEdit {
+    color: white;
+}
+QLineEdit::selection {
+    background-color: #3399ff;
+    color: white;
+}
+
+QLineEdit#urlInput::selection {
+    background-color: #3399ff;
+    color: white;
+}
+
 #linkButton {
     font-size: 15px;
     font-weight: bold;
@@ -63,18 +76,17 @@ QWidget {
     padding: 5px;
     font-size: 14px;
     background-color: #121212;
-    selection-background-color: #FFFFFF;
 }
 #themeButton {
     font-size: 15px;
     font-weight: bold;
     color: white;
-    width 115px;
-    height: 35px;
-    min-width: 115px;
-    min-height: 35px;
-    max-width: 115px;
-    max-height: 35px;
+    width 25px;
+    height: 25px;
+    min-width: 25px;
+    min-height: 25px;
+    max-width: 25px;
+    max-height: 25px;
     background-color: #1DB954;
     color: white;
     border-radius: 5px;
