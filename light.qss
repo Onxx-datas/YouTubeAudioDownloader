@@ -14,6 +14,11 @@ QLineEdit#urlInput::selection {
     background-color: #3399ff;
     color: white;
 }
+
+
+
+
+
 #linkButton {
     font-size: 15px;
     font-weight: bold;
@@ -30,7 +35,6 @@ QLineEdit#urlInput::selection {
     padding: 8px;
     font-size: 14px;
 }
-
 #downloadButton {
     font-size: 15px;
     font-weight: bold;
@@ -92,6 +96,25 @@ QLineEdit#urlInput::selection {
     padding: 8px;
     font-size: 14px;
 }
+#cancelButton {
+    font-size: 15px;
+    font-weight: bold;
+    width 60px;
+    height: 15px;
+    min-width: 60px;
+    min-height: 15px;
+    max-width: 60px;
+    max-height: 15px;
+    background-color: #1DB954;
+    color: white;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 14px;
+}
+
+
+
+
 
 #linkButton:hover {
     background-color: #1AA34A;
@@ -102,6 +125,17 @@ QLineEdit#urlInput::selection {
 #folderButton:hover {
     background-color: #1AA34A;
 }
+#themeButton {
+    background-color: #1AA34A;
+}
+#cancelButton:hover {
+    background-color: #1AA34A;
+}
+
+
+
+
+
 #urlLabel {
     font-size: 15px;
     font-weight: bold;
@@ -121,6 +155,11 @@ QLineEdit#urlInput::selection {
     font-size: 15px;
     color: black;
 }
+
+
+
+
+
 #qualityDropdown {
     font-size: 14px;
     color: #333333;
@@ -135,34 +174,19 @@ QLineEdit#urlInput::selection {
 #qualityDropdown QAbstractItemView {
     color: black; 
 }
-#cancelButton {
-    font-size: 15px;
-    font-weight: bold;
-    width 60px;
-    height: 15px;
-    min-width: 60px;
-    min-height: 15px;
-    max-width: 60px;
-    max-height: 15px;
-    background-color: #1DB954;
-    color: white;
-    border-radius: 5px;
-    padding: 8px;
-    font-size: 14px;
-}
-#cancelButton:hover {
-    background-color: #1AA34A;
-}
+
+
+
+
+
 #menuButton {
     border: none;
     background: transparent;
     padding: 0;
 }
-
 #menuButton:hover {
     background: rgba(255, 255, 255, 0.1);
 }
-
 #menuButton:pressed {
     background: rgba(255, 255, 255, 0.2);
 }

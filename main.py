@@ -2,6 +2,7 @@ import os
 import sys
 import subprocess
 from PyQt6.QtCore import QSize
+from PyQt6.QtCore import Qt
 from download import DownloadThread
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QLabel, QLineEdit, 
                             QPushButton, QFileDialog, QVBoxLayout, QWidget, 
@@ -101,15 +102,16 @@ class YouTubeDownloader(QMainWindow):
         central_widget = QWidget(self)
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
-        self.create_menu_button()
         self.create_url_input()
 
+        self.create_menu_button()
         self.create_url_input()
         self.create_action_buttons()
         self.create_status_display()
         self.create_quality_selector()
         self.create_theme_button()
         self.create_copyright_label()
+        self.create_side_panel()
         self.setup_connections()
 
     def create_url_input(self):
@@ -151,6 +153,40 @@ class YouTubeDownloader(QMainWindow):
         self.cancel_button.setObjectName("cancelButton")
         self.cancel_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.cancel_button.clicked.connect(self.cancel_downloads)
+    def create_side_panel(self):
+        self.side_panel = QDockWidget("Side panel", self)
+        self.side_panel.setFeatures(QDockWidget.DockWidgetFeature.DockWidgetClosable)
+        self.side_panel.setAllowedAreas(Qt.DockWidgetArea.LeftDockWidgetArea | Qt.DockWidgetArea.RightDockWidgetArea)
+
+        side_widget = QWidget(self)
+        side_layout = QVBoxLayout(side_widget)
+        
+        self.history_list = QListWidget(self)
+        side_layout.addWidget(self.history_list)
+        side_widget.setLayout(side_layout)
+
+        self.side_panel.setWidget(side_widget)
+        self.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, self.side_panel)
+        self.side_panel.setVisible(False)
+        self.history_list.addItem("Downloaded Video 1 - 2025-04-07")
+        self.history_list.addItem("Downloaded Video 2 - 2025-04-07")
+
+    def create_menu_button(self):
+        self.menu_button = QPushButton(self)
+        self.menu_button.setGeometry(20, 20, 40, 40)
+        self.menu_button.setObjectName("menuButton")
+        self.menu_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+        self.menu_button.setIconSize(QSize(32, 32))
+        self.update_menu_icon()
+        self.menu = QMenu(self)
+        self.create_menu_actions()
+        self.menu_button.clicked.connect(lambda: self.toggle_side_panel())
+        
+    def toggle_side_panel(self):
+        if self.side_panel.isVisible():
+            self.side_panel.hide()
+        else:
+            self.side_panel.show()
 
     def create_quality_selector(self):
         self.quality_label = QLabel("Select Audio Quality:", self)
