@@ -32,10 +32,12 @@ class YouTubeDownloader(QMainWindow):
 
         self.output_folder = self.init_paths()
         self.current_theme = self.load_theme_config()
-
         self.init_ui()
         self.set_theme(self.current_theme)
         self.set_window_icon()
+
+
+
 
 
 
@@ -47,6 +49,8 @@ class YouTubeDownloader(QMainWindow):
         os.makedirs(self.config_folder, exist_ok=True)
         return output_folder
     
+
+
 
 
 
@@ -63,7 +67,9 @@ class YouTubeDownloader(QMainWindow):
         except Exception as e:
             print(f"Config error: {e}")
             return DEFAULT_THEME
-        
+
+
+
 
 
 
@@ -73,12 +79,16 @@ class YouTubeDownloader(QMainWindow):
 
 
 
+
+
     def set_window_icon(self):
         icon_path = os.path.abspath("logo.ico")
         if os.path.exists(icon_path):
             self.setWindowIcon(QIcon(icon_path))
             if hasattr(QApplication.instance(), 'setWindowIcon'):
                 QApplication.instance().setWindowIcon(QIcon(icon_path))
+
+
 
 
 
@@ -98,17 +108,19 @@ class YouTubeDownloader(QMainWindow):
 
 
 
+
+
     def create_menu_actions(self):
         about_action = QAction("About", self)
         settings_action = QAction("Settings", self)
         exit_action = QAction("Exit", self)
-
         exit_action.triggered.connect(self.close)
-
         self.menu.addAction(about_action)
         self.menu.addAction(settings_action)
         self.menu.addSeparator()
         self.menu.addAction(exit_action)
+
+
 
 
 
@@ -124,6 +136,8 @@ class YouTubeDownloader(QMainWindow):
         if os.path.exists(icon_file):
             self.menu_button.setIcon(QIcon(icon_file))
             self.menu_button.setIconSize(QSize(32, 32))
+
+
 
 
 
@@ -151,6 +165,8 @@ class YouTubeDownloader(QMainWindow):
 
 
 
+
+
     def create_url_input(self):
         self.url_label = QLabel("Enter YouTube Video URL:", self)
         self.url_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
@@ -160,6 +176,8 @@ class YouTubeDownloader(QMainWindow):
         self.url_input.setObjectName("urlInput")
         self.url_input.setGeometry(70, 100, 600, 30)
         self.url_input.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+
+
 
 
 
@@ -181,6 +199,8 @@ class YouTubeDownloader(QMainWindow):
 
 
 
+
+
     def create_status_display(self):
         self.status_label = QLabel("Waiting for input...", self)
         self.status_label.setObjectName("statusLabel")
@@ -192,6 +212,8 @@ class YouTubeDownloader(QMainWindow):
         self.cancel_button.setObjectName("cancelButton")
         self.cancel_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.cancel_button.clicked.connect(self.cancel_downloads)
+
+
 
 
 
@@ -220,6 +242,8 @@ class YouTubeDownloader(QMainWindow):
 
 
 
+
+
     def create_menu_button(self):
         self.menu_button = QPushButton(self)
         self.menu_button.setGeometry(20, 20, 40, 40)
@@ -233,12 +257,16 @@ class YouTubeDownloader(QMainWindow):
 
 
 
+
+
         
     def toggle_side_panel(self):
         if self.side_panel.isVisible():
             self.side_panel.hide()
         else:
             self.side_panel.show()
+
+
 
 
 
@@ -256,17 +284,20 @@ class YouTubeDownloader(QMainWindow):
 
 
 
+
+
     def create_format_selector(self):
         self.format_label = QLabel("Select Audio Format:", self)
         self.format_label.setGeometry(70, 270, 200, 30)
         self.format_label.setObjectName("formatLabel")
-        
         self.format_dropdown = QComboBox(self)
         self.format_dropdown.setGeometry(230, 270, 150, 30)
         self.format_dropdown.addItems(AUDIO_FORMATS)
         self.format_dropdown.setCurrentIndex(0)  # Default to MP3
         self.format_dropdown.setObjectName("formatDropdown")
         
+
+
 
 
 
@@ -280,10 +311,14 @@ class YouTubeDownloader(QMainWindow):
 
 
 
+
+
     def create_copyright_label(self):
         self.copyright_label = QLabel("© 2025 Abdulaziz.K. All rights reserved.", self)
         self.copyright_label.setGeometry(660, 515, 300, 30)
         self.copyright_label.setObjectName("copyrightLabel")
+
+
 
 
 
@@ -296,10 +331,14 @@ class YouTubeDownloader(QMainWindow):
 
 
 
+
+
     def toggle_theme(self):
         self.current_theme = "light" if self.current_theme == "dark" else "dark"
         self.set_theme(self.current_theme)
         self.save_theme()
+
+
 
 
 
@@ -324,12 +363,16 @@ class YouTubeDownloader(QMainWindow):
 
 
 
+
+
     def save_theme(self):
         try:
             with open(self.config_path, "w", encoding="utf-8") as f:
                 f.write(self.current_theme)
         except Exception as e:
             print(f"Failed to save theme: {e}")
+
+
 
 
 
@@ -346,6 +389,8 @@ class YouTubeDownloader(QMainWindow):
                 subprocess.run(["xdg-open", file_path])
         except Exception as e:
             self.status_label.setText(f"Error opening file: {str(e)}")
+
+
 
 
 
@@ -374,6 +419,8 @@ class YouTubeDownloader(QMainWindow):
 
 
 
+
+
     def get_links_from_file(self):
         file_path = "links.txt"
         if not os.path.exists(file_path):
@@ -389,6 +436,8 @@ class YouTubeDownloader(QMainWindow):
             return None
         return links
     
+
+
 
 
 
@@ -408,6 +457,8 @@ class YouTubeDownloader(QMainWindow):
 
 
 
+
+
     def cancel_downloads(self):
         for thread in self.threads:
             thread.stop()
@@ -419,9 +470,13 @@ class YouTubeDownloader(QMainWindow):
 
 
 
+
+
     def validate_url(self, url):
         return "youtube.com" in url or "youtu.be" in url
     
+
+
 
 
 
@@ -431,10 +486,14 @@ class YouTubeDownloader(QMainWindow):
 
 
 
+
+
     def show_error(self, message):
         self.status_label.setText(message)
         self.download_button.setEnabled(True)
         QTimer.singleShot(3000, lambda: self.status_label.setText("Waiting for input..."))
+
+
 
 
 
@@ -449,12 +508,16 @@ class YouTubeDownloader(QMainWindow):
 
 
 
+
+
     def select_folder(self):
         folder = QFileDialog.getExistingDirectory(self, "Select Save Folder")
         if folder:
             self.output_folder = folder
             self.status_label.setText(f"Saving to: {self.output_folder}")
     
+
+
 
 
 
