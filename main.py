@@ -16,7 +16,7 @@ from PyQt6.QtGui import QColor, QBrush
 
 
 
-
+AUDIO_FORMATS = ["MP3", "WAV", "AAC", "OGG"]
 DEFAULT_THEME = "dark"
 MAX_LINKS = 15
  
@@ -138,6 +138,7 @@ class YouTubeDownloader(QMainWindow):
         self.setCentralWidget(central_widget)
         self.create_url_input()
         self.create_menu_button()
+        self.create_format_selector()
         self.create_url_input()
         self.create_action_buttons()
         self.create_status_display()
@@ -252,6 +253,20 @@ class YouTubeDownloader(QMainWindow):
         self.quality_dropdown.setCurrentIndex(1)  # Default to 128kbps
         self.quality_dropdown.setObjectName("qualityDropdown")
 
+
+
+
+    def create_format_selector(self):
+        self.format_label = QLabel("Select Audio Format:", self)
+        self.format_label.setGeometry(70, 270, 200, 30)
+        self.format_label.setObjectName("formatLabel")
+        
+        self.format_dropdown = QComboBox(self)
+        self.format_dropdown.setGeometry(230, 270, 150, 30)
+        self.format_dropdown.addItems(AUDIO_FORMATS)
+        self.format_dropdown.setCurrentIndex(0)  # Default to MP3
+        self.format_dropdown.setObjectName("formatDropdown")
+        
 
 
 
