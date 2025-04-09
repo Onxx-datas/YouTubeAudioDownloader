@@ -11,13 +11,15 @@ from PyQt6.QtCore import Qt, QTimer, pyqtSignal
 from PyQt6.QtGui import QCursor, QIcon
 from PyQt6.QtWidgets import QDockWidget, QMenu
 from PyQt6.QtGui import QAction
+from PyQt6.QtWidgets import QListWidgetItem
+from PyQt6.QtGui import QColor, QBrush
 
 
 
 
 DEFAULT_THEME = "dark"
 MAX_LINKS = 15
-
+ 
 
 
 
@@ -194,19 +196,25 @@ class YouTubeDownloader(QMainWindow):
 
 
     def create_side_panel(self):
-        self.side_panel = QDockWidget("Side panel", self)
+        self.side_panel = QDockWidget("Menu", self)
         self.side_panel.setFeatures(QDockWidget.DockWidgetFeature.DockWidgetClosable)
         self.side_panel.setAllowedAreas(Qt.DockWidgetArea.LeftDockWidgetArea | Qt.DockWidgetArea.RightDockWidgetArea)
         side_widget = QWidget(self)
         side_layout = QVBoxLayout(side_widget)
+        self.side_panel.setFixedWidth(220)
         self.history_list = QListWidget(self)
+        side_widget.setObjectName("sidePanel")
         side_layout.addWidget(self.history_list)
         side_widget.setLayout(side_layout)
         self.side_panel.setWidget(side_widget)
         self.addDockWidget(Qt.DockWidgetArea.LeftDockWidgetArea, self.side_panel)
         self.side_panel.setVisible(False)
-        self.history_list.addItem("Downloaded Video 1 - 2025-04-07")
-        self.history_list.addItem("Downloaded Video 2 - 2025-04-07")
+        item1 = QListWidgetItem("Downloaded Video 1 - 2025-04-07")
+        item1.setForeground(QBrush(QColor("white")))
+        self.history_list.addItem(item1)
+        item2 = QListWidgetItem("Downloaded Video 2 - 2025-04-09")
+        item2.setForeground(QBrush(QColor("white")))
+        self.history_list.addItem(item2)
 
 
 
@@ -432,7 +440,7 @@ class YouTubeDownloader(QMainWindow):
             self.output_folder = folder
             self.status_label.setText(f"Saving to: {self.output_folder}")
     
-    
+
 
 
 def main():

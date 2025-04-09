@@ -1,6 +1,7 @@
 import os
 import threading
 import socket
+import time
 import urllib
 import yt_dlp
 from PyQt6.QtCore import QThread, pyqtSignal
@@ -23,28 +24,19 @@ class DownloadThread(QThread):
     error_signal = pyqtSignal(str)
     finished = pyqtSignal()
 
-
-
-
-    def __init__(self, video_url, output_folder, quality="192"):
+    def __init__(self, video_urls, output_folder, quality="192"):
         super().__init__()
-        self.video_url = video_url
+        self.video_urls = video_urls if isinstance(video_urls, list) else [video_urls]
         self.output_folder = output_folder
         self.quality = quality
         self._stop_event = threading.Event()
 
-
-
-
     def run(self):
         if not check_connection():
             self.error_signal.emit("Error: No internet connection.")
-            self.finished.emit()
+            time.sleep(2)
             return
-        if not ("youtube.com" in self.video_url or "youtu.be" in self.video_url):
-            self.error_signal.emit(f"Invalid URL: {self.video_url}")
-            self.finished.emit()
-            return
+
         ydl_opts = {
             'format': 'bestaudio/best',
             'outtmpl': os.path.join(self.output_folder, '%(title)s.%(ext)s'),
@@ -56,24 +48,40 @@ class DownloadThread(QThread):
             'quiet': True,
             'progress_hooks': [self.progress_hook],
         }
+
         try:
-            self.progress_signal.emit(f"Downloading {self.video_url}...")
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                info = ydl.extract_info(self.video_url, download=False)
-                title = info.get('title', 'Unknown')
+            for url in self.video_urls:
+                if not ("youtube.com" in url or "youtu.be" in url):
+                    self.error_signal.emit(f"Invalid URL: {url}")
+                    time.sleep(2)
+                    continue
                 if self._stop_event.is_set():
-                    self.progress_signal.emit("Waiting for input...")
-                    self.finished.emit()
-                    return
-                ydl.download([self.video_url])
-                if self._stop_event.is_set():
-                    self.progress_signal.emit("Waiting for input...")
-                    self.finished.emit()
-                    return
+                    self.progress_signal.emit("Download canceled")
+                    time.sleep(2)
+                    break
+                self.progress_signal.emit(f"Downloading {url}...")
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                    info = ydl.extract_info(url, download=False)
+                    title = info.get('title', 'Unknown')
+                    if self._stop_event.is_set():
+                        self.progress_signal.emit("Download canceled")
+                        time.sleep(2)
+                        break
+                    ydl.download([url])
+                    if self._stop_event.is_set():
+                        self.progress_signal.emit("Download canceled")
+                        time.sleep(2)
+                        break
         except Exception as e:
-            self.error_signal.emit(f"Download failed: {str(e)}")
+            if str(e) == "Download stopped by user":
+                self.progress_signal.emit("Download canceled")
+                time.sleep(2)
+            else:
+                self.error_signal.emit(f"Download failed: {str(e)}")
+                time.sleep(2)
         finally:
             self.finished.emit()
+
 
 
 
@@ -81,17 +89,17 @@ class DownloadThread(QThread):
     def progress_hook(self, d):
         if self._stop_event.is_set():
             raise Exception("Download stopped by user")
+            time.sleep(2)
+        status = d.get('status')
+        title = d.get('info_dict', {}).get('title', 'Unknown')
 
-        if d['status'] == 'downloading':
+        if status == 'downloading':
             percent = d.get('_percent_str', '0%').strip()
-            title = d.get('info_dict', {}).get('title', 'Unknown')
-            self.progress_signal.emit("Waiting for input...")
-        elif d['status'] == 'finished':
-            title = d.get('info_dict', {}).get('title', 'Unknown')
-            self.progress_signal.emit("Waiting for input...")
-
-
-            
+            self.progress_signal.emit(f"Downloading {title}: {percent}")
+        elif status == 'finished':
+            time.sleep(2)
+            self.progress_signal.emit(f"Finished downloading: {title}")
+            time.sleep(2)
 
     def stop(self):
         self._stop_event.set()

@@ -194,3 +194,39 @@ QLineEdit#urlInput::selection {
     width: 32px;
     height: 32px;
 }
+
+
+
+
+
+#sidePanel {
+        background-color: #C2C1C1;
+        border-left: 2px solid #ccc;
+        padding: 10px;
+    }
+
+#sidePanel QLabel {
+        color: #333;
+        font-size: 14px;
+    }
+
+#sidePanel QPushButton {
+        background-color: #ddd;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 8px;
+    }
+
+#sidePanel QPushButton:hover {
+        background-color: #bbb;
+    }
+QMainWindow::separator {
+    background: white;
+    width: 1px;
+}
+QDockWidget::title {
+    background-color: #C2C1C1;
+    color: white;
+    padding: 5px;
+    font-weight: bold;
+}
