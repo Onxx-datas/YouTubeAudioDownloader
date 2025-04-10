@@ -305,12 +305,12 @@ class YouTubeDownloader(QMainWindow):
 #/////////////////////////////////////////////////////// FORMAT SELECTOR ////////////////////////////////////////////////////////
     def create_format_selector(self):
         self.format_label = QLabel("Select Audio Format:", self)
-        self.format_label.setGeometry(70, 270, 200, 30)
+        self.format_label.setGeometry(400, 230, 200, 30)
         self.format_label.setObjectName("formatLabel")
         self.format_dropdown = QComboBox(self)
-        self.format_dropdown.setGeometry(230, 270, 150, 30)
+        self.format_dropdown.setGeometry(570, 230, 150, 30)
         self.format_dropdown.addItems(AUDIO_FORMATS)
-        self.format_dropdown.setCurrentIndex(0)  # Default to MP3
+        self.format_dropdown.setCurrentIndex(0)
         self.format_dropdown.setObjectName("formatDropdown")
         
 
