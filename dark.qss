@@ -168,25 +168,3 @@ QLineEdit#urlInput::selection {
 #qualityDropdown::drop-down {
     border: none;
 }
-
-
-
-
-
-#menuButton {
-    border: none;
-    background: transparent;
-    padding: 0;
-}
-
-#menuButton:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-#menuButton:pressed {
-    background: rgba(255, 255, 255, 0.2);
-}
-#menuButton::icon {
-    width: 32px;
-    height: 32px;
-}
