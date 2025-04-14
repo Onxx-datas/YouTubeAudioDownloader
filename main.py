@@ -1,14 +1,14 @@
 #1/////////////////////////////////////////////////////// USED LIBRARIES /////////////////////////////////////////////////////////////////////////
-import os                                                                                     # Using Operation System's modules
-import sys                                                                                    # Using System to interact with enviroment
-import subprocess                                                                             # Using SubProcces to inteact with system commands
-from PyQt6.QtCore import QSize                                                                # Using Pyqt6's Size settings
-from PyQt6.QtCore import Qt                                                                   # Using PyQt6's Qt namespace
-from download import DownloadThread                                                           # Using ThreadDownload from download.py
+import os
+import sys
+import subprocess
+from PyQt6.QtCore import QSize
+from PyQt6.QtCore import Qt
+from download import DownloadThread
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QLabel, QLineEdit, QPushButton, QFileDialog, QVBoxLayout, QWidget, QComboBox)
-from PyQt6.QtCore import Qt, QTimer, pyqtSignal                                               # Using Qt, QTimer, pyqtSignals from PyQt6
-from PyQt6.QtGui import QCursor, QIcon                                                        # Using QCursor, QIcon
-from PyQt6.QtGui import QColor                                                                # Using QColor from PyQt6
+from PyQt6.QtCore import Qt, QTimer, pyqtSignal
+from PyQt6.QtGui import QCursor, QIcon
+from PyQt6.QtGui import QColor
 
 
 
@@ -16,9 +16,9 @@ from PyQt6.QtGui import QColor                                                  
 
 
 #2/////////////////////////////////////////////////////////// CONSTANTS //////////////////////////////////////////////////////////////////////////
-AUDIO_FORMATS = ["MP3", "WAV", "AAC", "OGG"]                                                  # Assigning available formats to download
-DEFAULT_THEME = "dark"                                                                        # Setting dark theme as a default theme for GUI
-MAX_LINKS = 15                                                                                # Setting maximum links to download up to 15 links
+AUDIO_FORMATS = ["MP3", "WAV", "AAC", "OGG"]
+DEFAULT_THEME = "dark"
+MAX_LINKS = 15
 
 
 
@@ -34,7 +34,7 @@ class YouTubeDownloader(QMainWindow):                                           
 
 
 #4//////////////////////////////////////////////////////// CONSTRUCTOR ///////////////////////////////////////////////////////////////////////////
-    def __init__(self):                                                                       # 
+    def __init__(self):
         super().__init__()
         self.output_folder = self.init_paths()
         self.current_theme = self.load_theme_config()
@@ -201,7 +201,7 @@ class YouTubeDownloader(QMainWindow):                                           
         self.format_label.setGeometry(400, 230, 200, 30)
         self.format_label.setObjectName("formatLabel")
         self.format_dropdown = QComboBox(self)
-        self.format_dropdown.setGeometry(570, 230, 150, 30)
+        self.format_dropdown.setGeometry(560, 230, 150, 30)
         self.format_dropdown.addItems(AUDIO_FORMATS)
         self.format_dropdown.setCurrentIndex(0)
         self.format_dropdown.setObjectName("formatDropdown")
@@ -439,7 +439,7 @@ class YouTubeDownloader(QMainWindow):                                           
         if folder:
             self.output_folder = folder
             self.status_label.setText(f"Saving to: {self.output_folder}")
-
+                    
 
 
 

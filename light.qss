@@ -150,16 +150,16 @@ QLineEdit#urlInput::selection {
     font-size: 10px;
     color: #303030; 
 }
+
+
+
+
+
 #qualityLabel {
     font-weight: bold;
     font-size: 15px;
     color: black;
 }
-
-
-
-
-
 #qualityDropdown {
     font-size: 14px;
     color: #333333;

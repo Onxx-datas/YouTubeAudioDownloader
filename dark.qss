@@ -147,16 +147,16 @@ QLineEdit#urlInput::selection {
     font-size: 10px;
     color: gray; 
 }
+
+
+
+
+
 #qualityLabel {
     font-weight: bold;
     font-size: 15px;
     color: white;
 }
-
-
-
-
-
 #qualityDropdown {
     font-size: 14px;
     color: white;
@@ -167,4 +167,31 @@ QLineEdit#urlInput::selection {
 }
 #qualityDropdown::drop-down {
     border: none;
+}
+#qualityDropdown QAbstractItemView {
+    color: white; 
+}
+
+
+
+
+#formatLabel {
+    font-weight: bold;
+    font-size: 15px;
+    color: white;
+}
+
+#formatDropdown {
+    font-size: 14px;
+    color: white;
+    background-color: #121212;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 5px;
+}
+#formatDropdown::drop-down {
+    border: none;
+}
+#formatDropdown QAbstractItemView {
+    color: white; 
 }
