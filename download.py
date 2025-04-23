@@ -41,14 +41,16 @@ class DownloadThread(QThread):
         ydl_opts = {
             'format': 'bestaudio/best',
             'outtmpl': os.path.join(self.output_folder, '%(title)s.%(ext)s'),
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': self.format,
-                'preferredquality': self.quality,
-            }],
             'quiet': True,
             'progress_hooks': [self.progress_hook],
         }
+
+        if self.format in ["mp3", "wav", "aac"]:
+            ydl_opts['postprocessors'] = [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': self.format,
+                'preferredquality': self.quality,
+            }]
 
         try:
             for url in self.video_urls:

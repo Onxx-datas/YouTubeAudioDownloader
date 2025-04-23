@@ -16,7 +16,7 @@ from PyQt6.QtGui import QColor
 
 
 #2/////////////////////////////////////////////////////////// CONSTANTS //////////////////////////////////////////////////////////////////////////
-AUDIO_FORMATS = ["MP3", "WAV", "AAC", "OGG"]
+AUDIO_FORMATS = ["MP3", "WAV", "AAC", "WEBM"]
 DEFAULT_THEME = "dark"
 MAX_LINKS = 15
 
