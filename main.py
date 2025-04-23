@@ -43,7 +43,10 @@ class YouTubeDownloader(QMainWindow):                                           
         self.set_window_icon()
 
 
-
+#4.1////////////////////////////////////////////////// DOWNLOAD BUTTON UPDATER //////////////////////////////////////////////////////////////////
+    def update_download_button_label(self):
+        selected = self.format_dropdown.currentText()
+        self.download_button.setText(f"Download {selected}")
 
 
 
@@ -110,10 +113,12 @@ class YouTubeDownloader(QMainWindow):                                           
         self.setFixedSize(850, 550)
         layout = QVBoxLayout()
         central_widget = QWidget(self)
+        self.download_button = QPushButton("Download MP3")
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
         self.create_url_input()
         self.create_format_selector()
+        self.format_dropdown.currentTextChanged.connect(self.update_download_button_label)
         self.create_action_buttons()
         self.create_status_display()
         self.create_quality_selector()
@@ -445,13 +450,13 @@ class YouTubeDownloader(QMainWindow):                                           
         if folder:
             self.output_folder = folder
             self.status_label.setText(f"Saving to: {self.output_folder}")
+
+
+
                     
 
 
-
-
-
-#31///////////////////////////////////////////////////////// APP STARTER /////////////////////////////////////////////////////////////////////////
+#32///////////////////////////////////////////////////////// APP STARTER /////////////////////////////////////////////////////////////////////////
 def main():
     app = QApplication(sys.argv)
     icon_path = os.path.abspath("logo.ico")
