@@ -360,12 +360,18 @@ class YouTubeDownloader(QMainWindow):                                           
 
 #24/////////////////////////////////////////////////// MULTIPLE DOWNLOAD LOGIC ///////////////////////////////////////////////////////////////////
     def start_download_threads(self, links, quality):
+        selected_format = self.format_dropdown.currentText().lower()
         self.threads = []
         for link in links:
             if not self.validate_url(link):
                 self.show_error(f"Invalid URL: {link}")
                 continue
-            download_thread = DownloadThread(link, self.output_folder, quality)
+            download_thread = DownloadThread(
+                link,
+                self.output_folder,
+                quality,
+                format=selected_format
+                )
             download_thread.progress_signal.connect(self.update_progress)
             download_thread.error_signal.connect(self.show_error)
             download_thread.finished.connect(self.check_all_downloads_done)

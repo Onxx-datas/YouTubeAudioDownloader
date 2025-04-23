@@ -24,11 +24,12 @@ class DownloadThread(QThread):
     error_signal = pyqtSignal(str)
     finished = pyqtSignal()
 
-    def __init__(self, video_urls, output_folder, quality="192"):
+    def __init__(self, video_urls, output_folder, quality="192", format="mp3"):
         super().__init__()
         self.video_urls = video_urls if isinstance(video_urls, list) else [video_urls]
         self.output_folder = output_folder
         self.quality = quality
+        self.format = format.lower()
         self._stop_event = threading.Event()
 
     def run(self):
@@ -42,7 +43,7 @@ class DownloadThread(QThread):
             'outtmpl': os.path.join(self.output_folder, '%(title)s.%(ext)s'),
             'postprocessors': [{
                 'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',
+                'preferredcodec': self.format,
                 'preferredquality': self.quality,
             }],
             'quiet': True,
