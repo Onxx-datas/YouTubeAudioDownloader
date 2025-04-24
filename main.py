@@ -64,6 +64,18 @@ class YouTubeDownloader(QMainWindow):                                           
 
 
 
+#5.1///////////////////////////////// SAVES LINKS.TXT AND CONFIG.TXT INTO USER'S APPDATA DIRECTORY //////////////////////////////////////////////
+    def get_links_file_path(self):
+        appdata_dir = os.getenv('LOCALAPPDATA')  # For Windows AppData\Local
+        app_folder = os.path.join(appdata_dir, 'YouTubeExtractor')
+        os.makedirs(app_folder, exist_ok=True)  # Create if doesn't exist
+        return os.path.join(app_folder, 'links.txt')
+
+
+
+
+
+
 #6///////////////////////////////////////////////////////// THEME LOADER /////////////////////////////////////////////////////////////////////////
     def load_theme_config(self):
         try:
@@ -298,7 +310,7 @@ class YouTubeDownloader(QMainWindow):                                           
 
 #21/////////////////////////////////////////////////////// LINKS.TXT OPENER //////////////////////////////////////////////////////////////////////
     def open_links_file(self):
-        file_path = "links.txt"
+        file_path = self.get_links_file_path()
         if not os.path.exists(file_path):
             with open(file_path, "w", encoding="utf-8") as f:
                 f.write("")
@@ -344,7 +356,7 @@ class YouTubeDownloader(QMainWindow):                                           
 
 #23/////////////////////////////////////////////////////// LINK LOADER ///////////////////////////////////////////////////////////////////////////
     def get_links_from_file(self):
-        file_path = "links.txt"
+        file_path = self.get_links_file_path()
         if not os.path.exists(file_path):
             self.show_error("Error: links.txt not found.")
             return None
