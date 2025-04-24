@@ -2,7 +2,7 @@
 
 A Python desktop app to extract audio from YouTube videos. Built with **PyQt6**, styled with **QSS**, and packed with smart features like batch downloading, theme switching, and format selection.
 
-![Project Status](https://img.shields.io/badge/status-developing-orange?style=flat-square)
+   ![Project Status](https://img.shields.io/badge/status-developing-orange?style=flat-square)
 ---
 
 ## ✨ Features
