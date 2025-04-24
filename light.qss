@@ -4,17 +4,13 @@ QWidget {
 }
 QLineEdit {
     color: black;
+    background-color: #DEDFDE;
 }
+
 QLineEdit::selection {
     background-color: #3399ff;
     color: white;
 }
-
-QLineEdit#urlInput::selection {
-    background-color: #3399ff;
-    color: white;
-}
-
 
 
 
@@ -23,7 +19,7 @@ QLineEdit#urlInput::selection {
     font-size: 15px;
     font-weight: bold;
     color: white;
-    width 115px;
+    width: 115px;
     height: 35px;
     min-width: 115px;
     min-height: 35px;
@@ -39,7 +35,7 @@ QLineEdit#urlInput::selection {
     font-size: 15px;
     font-weight: bold;
     color: white;
-    width 410px;
+    width: 410px;
     height: 35px;
     min-width: 410px;
     min-height: 35px;
@@ -55,7 +51,7 @@ QLineEdit#urlInput::selection {
     font-size: 15px;
     font-weight: bold;
     color: white;
-    width 115px;
+    width: 115px;
     height: 35px;
     min-width: 115px;
     min-height: 35px;
@@ -68,7 +64,7 @@ QLineEdit#urlInput::selection {
     font-size: 14px;
 }
 #urlInput {
-    width 690px;
+    width: 690px;
     height: 20px;
     min-width: 690px;
     min-height: 20px;
@@ -79,12 +75,13 @@ QLineEdit#urlInput::selection {
     padding: 5px;
     font-size: 14px;
     background-color: #DEDFDE;
+    color: black;
 }
 #themeButton {
     font-size: 15px;
     font-weight: bold;
     color: white;
-    width 25px;
+    width: 25px;
     height: 25px;
     min-width: 25px;
     min-height: 25px;
@@ -99,7 +96,7 @@ QLineEdit#urlInput::selection {
 #cancelButton {
     font-size: 15px;
     font-weight: bold;
-    width 60px;
+    width: 60px;
     height: 15px;
     min-width: 60px;
     min-height: 15px;

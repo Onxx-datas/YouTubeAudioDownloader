@@ -5,10 +5,6 @@ QWidget {
 QLineEdit {
     color: white;
 }
-QLineEdit::selection {
-    background-color: #3399ff;
-    color: white;
-}
 QLineEdit#urlInput::selection {
     background-color: #3399ff;
     color: white;
