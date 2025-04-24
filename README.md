@@ -11,9 +11,6 @@ A Python desktop app to extract audio from YouTube videos. Built with **PyQt6**,
 - 📁 Choose audio format: MP3, WAV, AAC, or OGG
 - 📂 Batch downloads via `links.txt`
 - 🌘 Light & Dark theme support
-- 🔁 Auto-renames duplicate files to avoid overwrite
-- 📜 Download history panel (burger menu)
-- 🛡️ Planned password protection
 
 ---
 
