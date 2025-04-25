@@ -142,15 +142,22 @@ class YouTubeDownloader(QMainWindow):                                           
 
 
 
+
+
+
+
+
+
+
 #10///////////////////////////////////////////////////////// URL INPUT ///////////////////////////////////////////////////////////////////////////
     def create_url_input(self):
         self.url_label = QLabel("Enter YouTube Video URL:", self)
         self.url_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        self.url_label.setGeometry(70, 70, 600, 30)
+        self.url_label.setGeometry(70, 120, 600, 30)
         self.url_label.setObjectName("urlLabel")
         self.url_input = QLineEdit(self)
         self.url_input.setObjectName("urlInput")
-        self.url_input.setGeometry(70, 100, 600, 30)
+        self.url_input.setGeometry(70, 150, 600, 30)
         self.url_input.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
 
 
@@ -162,15 +169,15 @@ class YouTubeDownloader(QMainWindow):                                           
     def create_action_buttons(self):
         self.open_links_button = QPushButton("Open links.txt", self)
         self.open_links_button.setObjectName("linkButton")
-        self.open_links_button.setGeometry(70, 150, 115, 35)
+        self.open_links_button.setGeometry(70, 200, 115, 35)
         self.open_links_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.download_button = QPushButton("Download MP3", self)
         self.download_button.setObjectName("downloadButton")
-        self.download_button.setGeometry(210, 150, 610, 35)
+        self.download_button.setGeometry(210, 200, 610, 35)
         self.download_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
         self.folder_button = QPushButton("Saving folder", self)
         self.folder_button.setObjectName("folderButton")
-        self.folder_button.setGeometry(645, 150, 115, 35)
+        self.folder_button.setGeometry(645, 200, 115, 35)
         self.folder_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
 
 
@@ -199,10 +206,10 @@ class YouTubeDownloader(QMainWindow):                                           
 #13/////////////////////////////////////////////////////// QUALITY SELECTOR //////////////////////////////////////////////////////////////////////
     def create_quality_selector(self):
         self.quality_label = QLabel("Select Audio Quality:", self)
-        self.quality_label.setGeometry(70, 230, 200, 30)
+        self.quality_label.setGeometry(329, 280, 200, 30)
         self.quality_label.setObjectName("qualityLabel")
         self.quality_dropdown = QComboBox(self)
-        self.quality_dropdown.setGeometry(230, 230, 150, 30)
+        self.quality_dropdown.setGeometry(450, 280, 80, 30)
         self.quality_dropdown.addItems(["64kbps", "128kbps", "192kbps", "320kbps"])
         self.quality_dropdown.setCurrentIndex(1)
         self.quality_dropdown.setObjectName("qualityDropdown")
@@ -215,10 +222,10 @@ class YouTubeDownloader(QMainWindow):                                           
 #14/////////////////////////////////////////////////////// FORMAT SELECTOR ///////////////////////////////////////////////////////////////////////
     def create_format_selector(self):
         self.format_label = QLabel("Select Audio Format:", self)
-        self.format_label.setGeometry(400, 230, 200, 30)
+        self.format_label.setGeometry(545, 280, 200, 30)
         self.format_label.setObjectName("formatLabel")
         self.format_dropdown = QComboBox(self)
-        self.format_dropdown.setGeometry(560, 230, 150, 30)
+        self.format_dropdown.setGeometry(666, 280, 70, 30)
         self.format_dropdown.addItems(AUDIO_FORMATS)
         self.format_dropdown.setCurrentIndex(0)
         self.format_dropdown.setObjectName("formatDropdown")

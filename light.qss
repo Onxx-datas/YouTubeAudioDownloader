@@ -154,7 +154,7 @@ QLineEdit::selection {
 
 #qualityLabel {
     font-weight: bold;
-    font-size: 15px;
+    font-size: 12px;
     color: black;
 }
 #qualityDropdown {
@@ -177,7 +177,7 @@ QLineEdit::selection {
 
 #formatLabel {
     font-weight: bold;
-    font-size: 15px;
+    font-size: 12px;
     color: black;
 }
 
