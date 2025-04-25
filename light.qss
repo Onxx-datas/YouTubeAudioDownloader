@@ -180,7 +180,6 @@ QLineEdit::selection {
     font-size: 12px;
     color: black;
 }
-
 #formatDropdown {
     font-size: 14px;
     color: #333333;
@@ -193,5 +192,28 @@ QLineEdit::selection {
     border: none;
 }
 #formatDropdown QAbstractItemView {
+    color: black; 
+}
+
+
+
+
+#mediaLabel {
+    font-weight: bold;
+    font-size: 12px;
+    color: black;
+}
+#mediaDropdown {
+    font-size: 14px;
+    color: #333333;
+    background-color: #DEDFDE;
+    border: 1px solid #303030;
+    border-radius: 5px;
+    padding: 5px;
+}
+#mediaDropdown::drop-down {
+    border: none;
+}
+#mediaDropdown QAbstractItemView {
     color: black; 
 }

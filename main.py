@@ -132,6 +132,7 @@ class YouTubeDownloader(QMainWindow):                                           
         self.create_format_selector()
         self.format_dropdown.currentTextChanged.connect(self.update_download_button_label)
         self.create_action_buttons()
+        self.create_media_type_selector()
         self.create_status_display()
         self.create_quality_selector()
         self.create_theme_button()
@@ -179,6 +180,21 @@ class YouTubeDownloader(QMainWindow):                                           
         self.folder_button.setObjectName("folderButton")
         self.folder_button.setGeometry(645, 200, 115, 35)
         self.folder_button.setCursor(QCursor(Qt.CursorShape.PointingHandCursor))
+
+
+
+
+
+
+    def create_media_type_selector(self):
+        self.media_label = QLabel("Select Media Type:", self)
+        self.media_label.setGeometry(70, 280, 200, 30)
+        self.media_label.setObjectName("mediaLabel")
+        self.media_dropdown = QComboBox(self)
+        self.media_dropdown.setGeometry(190, 280, 70, 30)
+        self.media_dropdown.addItems(["Audio", "Video"])
+        self.media_dropdown.setCurrentIndex(0)  # Default to Audio
+        self.media_dropdown.setObjectName("mediaDropdown")
 
 
 
