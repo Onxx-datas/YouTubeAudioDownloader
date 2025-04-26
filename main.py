@@ -187,7 +187,7 @@ class YouTubeDownloader(QMainWindow):                                           
 
 
     def create_media_type_selector(self):
-        self.media_label = QLabel("Select Media Type:", self)
+        self.media_label = QLabel("Media Type:", self)
         self.media_label.setGeometry(70, 280, 200, 30)
         self.media_label.setObjectName("mediaLabel")
         self.media_dropdown = QComboBox(self)
@@ -221,7 +221,7 @@ class YouTubeDownloader(QMainWindow):                                           
 
 #13/////////////////////////////////////////////////////// QUALITY SELECTOR //////////////////////////////////////////////////////////////////////
     def create_quality_selector(self):
-        self.quality_label = QLabel("Select Audio Quality:", self)
+        self.quality_label = QLabel("Audio Quality:", self)
         self.quality_label.setGeometry(329, 280, 200, 30)
         self.quality_label.setObjectName("qualityLabel")
         self.quality_dropdown = QComboBox(self)
@@ -237,7 +237,7 @@ class YouTubeDownloader(QMainWindow):                                           
 
 #14/////////////////////////////////////////////////////// FORMAT SELECTOR ///////////////////////////////////////////////////////////////////////
     def create_format_selector(self):
-        self.format_label = QLabel("Select Audio Format:", self)
+        self.format_label = QLabel("Audio Format:", self)
         self.format_label.setGeometry(545, 280, 200, 30)
         self.format_label.setObjectName("formatLabel")
         self.format_dropdown = QComboBox(self)
